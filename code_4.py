@@ -3,6 +3,7 @@ import pandas as pd
 
 big_mac_file = './big-mac-full-index.csv'
 df = pd.read_csv(big_mac_file)
+print(df.columns)
 
 def get_big_mac_price_by_year(year, country_code):
     country_code = country_code.upper()
@@ -22,7 +23,7 @@ def get_the_cheapest_big_mac_price_by_year(year):
     df_by_year = df[df['date'].str.startswith(str(year))]
     cheapest_price = df_by_year['dollar_price'].min()
     cheapest_row = df_by_year[df_by_year['dollar_price'] == cheapest_price].iloc[0]
-    cheapest_country_name = cheapest_row['country_name']
+    cheapest_country_name = cheapest_row['country']
     cheapest_country_code = cheapest_row['iso_a3']
     return f"{cheapest_country_name}({cheapest_country_code}): ${cheapest_price}"
 
@@ -32,7 +33,7 @@ def get_the_most_expensive_big_mac_price_by_year(year):
     df_by_year = df[df['date'].str.startswith(str(year))]
     expensive_price = df_by_year['dollar_price'].max()
     expensive_row = df_by_year[df_by_year['dollar_price'] == expensive_price].iloc[0]
-    expensive_country_name = expensive_row['country_name']
+    expensive_country_name = expensive_row['country']
     expensive_country_code = expensive_row['iso_a3']
     return f"{expensive_country_name}({expensive_country_code}): ${expensive_price}"
 
