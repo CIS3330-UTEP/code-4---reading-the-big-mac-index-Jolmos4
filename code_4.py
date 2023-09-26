@@ -23,7 +23,7 @@ def get_the_cheapest_big_mac_price_by_year(year):
     df_by_year = df[df['date'].str.startswith(str(year))]
     cheapest_price = df_by_year['dollar_price'].min()
     cheapest_row = df_by_year[df_by_year['dollar_price'] == cheapest_price].iloc[0]
-    country_column = 'country_column' if 'country_column' in df.columns else 'country_column'
+    country_column = 'country_name' if 'country_name' in df.columns else 'country'
     cheapest_country_name = cheapest_row[country_column]
     cheapest_country_code = cheapest_row['iso_a3']
     return f"{cheapest_country_name}({cheapest_country_code}): ${cheapest_price}"
@@ -34,7 +34,7 @@ def get_the_most_expensive_big_mac_price_by_year(year):
     df_by_year = df[df['date'].str.startswith(str(year))]
     expensive_price = df_by_year['dollar_price'].max()
     expensive_row = df_by_year[df_by_year['dollar_price'] == expensive_price].iloc[0]
-    country_column = 'country_column' if 'country_column' in df.columns else 'country_column'
+    country_column = 'country_name' if 'country_name' in df.columns else 'country'
     expensive_country_name = expensive_row[country_column]
     expensive_country_code = expensive_row['iso_a3']
     return f"{expensive_country_name}({expensive_country_code}): ${expensive_price}"
