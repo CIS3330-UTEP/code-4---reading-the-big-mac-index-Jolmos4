@@ -20,45 +20,26 @@ def get_big_mac_price_by_country(country_code):
 def get_the_cheapest_big_mac_price_by_year(year):
     new_query = f"(date >= '{year}-01-01' & date <= '{year}-12-31')"
     df_by_year = df.query(new_query)
-    index_of_min_value = df['dollar_price'].idxmin()
+    index_of_min_value = df_by_year['dollar_price'].idxmin()
+    cheapest_burger = df_by_year.loc[index_of_min_value]
 
-    print(index_of_min_value)
-
-    print(df.loc[index_of_min_value])
-
-    print(df['dollar_price'].min())
-
-    print(df_by_year)
-
-    return(index_of_min_value)
+    result =f"{cheapest_burger['name']}({cheapest_burger['iso_a3']}): ${round(cheapest_burger['dollar_price'], 2)}"
+    return result
 
 def get_the_most_expensive_big_mac_price_by_year(year):
     new_query = f"(date >= '{year}-01-01' & date <= '{year}-12-31')"
     df_by_year = df.query(new_query)
-    index_of_max_value = df['dollar_price'].idxmax()
+    index_of_max_value = df_by_year['dollar_price'].idxmax()
+    expensive_burger = df_by_year.loc[index_of_max_value]
 
-    print(index_of_max_value)
-
-    print(df.loc[index_of_max_value])
-
-    print(df['dollar_price'].max())
-    
-    print(df_by_year)
-
-    return(index_of_max_value)
+    result =f"{expensive_burger['name']}({expensive_burger['iso_a3']}): ${round(expensive_burger['dollar_price'], 2)}"
+    return result
 
 if __name__ == "__main__":
     year = '2000'
     country_code = 'arg'  
 
-    mean_price_by_year = get_big_mac_price_by_year(year, country_code)
-    print(f"Mean Dollar Price for {country_code.upper()} in {year}: ${mean_price_by_year}")
-
-    mean_price_country = get_big_mac_price_by_country(country_code)
-    print(f"Overall Mean Dollar Price for {country_code.upper()}: ${mean_price_country}")
-
-    Cheapest_result = get_the_cheapest_big_mac_price_by_year(year)
-    print(f"Most Cheapest Price in Big Mac in {year}: {Cheapest_result}")
-
-    expensive_result = get_the_most_expensive_big_mac_price_by_year(year)
-    print(f"Most Expensive Price in Big Mac in {year}: {expensive_result}")
+    print(get_big_mac_price_by_year(year, country_code))
+    print(get_big_mac_price_by_country(country_code))
+    print(get_the_most_expensive_big_mac_price_by_year(year))
+    print(get_the_cheapest_big_mac_price_by_year(year))
