@@ -18,26 +18,34 @@ def get_big_mac_price_by_country(country_code):
     return round(df_by_country['dollar_price'].mean(), 2)
 
 def get_the_cheapest_big_mac_price_by_year(year):
-    #new_query = f"(date >= '{year}-01-01' & date <= '{year}-12-31')"
-    #df_by_year = df.query(new_query)
-    df_by_year = df[df['date'].str.startswith(str(year))]
-    cheapest_price = df_by_year['dollar_price'].min()
-    cheapest_row = df_by_year[df_by_year['dollar_price'] == cheapest_price].iloc[0]
-    country_column = 'country_name' if 'country_name' in df.columns else 'country'
-    cheapest_country_name = cheapest_row[country_column]
-    cheapest_country_code = cheapest_row['iso_a3']
-    return f"{cheapest_country_name}({cheapest_country_code}): ${cheapest_price}"
+    new_query = f"(date >= '{year}-01-01' & date <= '{year}-12-31')"
+    df_by_year = df.query(new_query)
+    index_of_min_value = df['dollar_price'].idxmin()
+
+    print(index_of_min_value)
+
+    print(df.loc[index_of_min_value])
+
+    print(df['dollar_price'].min())
+
+    print(df_by_year)
+
+    return(index_of_min_value)
 
 def get_the_most_expensive_big_mac_price_by_year(year):
-    # new_query = f"(date >= '{year}-01-01' & date <= '{year}-12-31')"
-    # df_by_year = df.query(new_query)
-    df_by_year = df[df['date'].str.startswith(str(year))]
-    expensive_price = df_by_year['dollar_price'].max()
-    expensive_row = df_by_year[df_by_year['dollar_price'] == expensive_price].iloc[0]
-    country_column = 'country_name' if 'country_name' in df.columns else 'country'
-    expensive_country_name = expensive_row[country_column]
-    expensive_country_code = expensive_row['iso_a3']
-    return f"{expensive_country_name}({expensive_country_code}): ${expensive_price}"
+    new_query = f"(date >= '{year}-01-01' & date <= '{year}-12-31')"
+    df_by_year = df.query(new_query)
+    index_of_max_value = df['dollar_price'].idxmax()
+
+    print(index_of_max_value)
+
+    print(df.loc[index_of_max_value])
+
+    print(df['dollar_price'].max())
+    
+    print(df_by_year)
+
+    return(index_of_max_value)
 
 if __name__ == "__main__":
     year = '2000'
@@ -49,8 +57,8 @@ if __name__ == "__main__":
     mean_price_country = get_big_mac_price_by_country(country_code)
     print(f"Overall Mean Dollar Price for {country_code.upper()}: ${mean_price_country}")
 
-    cheapest_result = get_the_cheapest_big_mac_price_by_year(year)
-    print(f"Cheapest Price in Big Mac in {year}: {cheapest_result}")
+    Cheapest_result = get_the_cheapest_big_mac_price_by_year(year)
+    print(f"Most Cheapest Price in Big Mac in {year}: {Cheapest_result}")
 
     expensive_result = get_the_most_expensive_big_mac_price_by_year(year)
     print(f"Most Expensive Price in Big Mac in {year}: {expensive_result}")
